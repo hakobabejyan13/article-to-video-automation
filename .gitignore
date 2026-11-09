@@ -1,0 +1,48 @@
+/CLAUDE.md
+
+# Secrets: .env is local only (.env.example is committed)
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node
+node_modules/
+
+# Silent render intermediates
+render/out/
+
+# Model caches and weights (Kokoro, spaCy, Hugging Face)
+.cache/
+models/
+hf_cache/
+*.pth
+*.onnx
+
+# Local only: build agent rules, build log, brief, backups, audits, test runs
+/STATUS.md
+/brief.docx
+/docs/brief.md
+/docs/walkthrough-outline.md
+/_t*-backup/
+/_rec-backup/
+/_audit*
+/_proj.tgz
+/test-runs/
+/render/.gitkeep
+
+# Deliverables zip only (not in the repository)
+/docs/next-ten-videos.md
+
+# Example articles, scenes, voice clips and videos: only the .gitkeep is committed
+/source/*
+!/source/.gitkeep
+/scenes/*
+!/scenes/.gitkeep
+/audio/*
+!/audio/.gitkeep
+/output/*
+!/output/.gitkeep

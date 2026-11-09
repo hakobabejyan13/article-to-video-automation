@@ -1,0 +1,23 @@
+# Python packages approved in PLAN.md section 8. Install with:
+#   pip install -r requirements.txt
+# Anything new needs Hakob's approval first (CLAUDE.md rule 7).
+# Versions pinned in T4 (2026-11-07) from the first working install on the Windows
+# laptop (Python 3.12.10). Tested with these packages that kokoro pulls in:
+# torch 2.15.0 (CPU), misaki 0.9.4, spacy 3.8.18, transformers 5.22.2,
+# espeakng-loader 0.2.4, huggingface_hub 2.4.0, numpy 2.5.4; spaCy model
+# en_core_web_sm 3.8.0 (misaki installs it on the first tts run).
+# In the cloud, install torch first from https://download.pytorch.org/whl/cpu
+# (the Linux PyPI wheel pulls about 2 GB of GPU libraries).
+
+# TTS (T4). Brings misaki[en], torch, transformers, huggingface-hub, numpy, loguru.
+kokoro==0.9.4
+# Write WAV files (T4)
+soundfile==0.14.0
+# config.yaml, lexicon.yaml, front matter
+PyYAML==6.0.3
+# Validate the scenes JSON (T2)
+jsonschema==4.26.0
+# Claude Haiku 5.5 fallback adapter (T3)
+anthropic==2.6.0
+# Tests (dev)
+pytest==9.2.0

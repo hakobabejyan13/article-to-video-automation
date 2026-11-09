@@ -1,0 +1,23 @@
+{
+  "name": "a2v-render",
+  "private": true,
+  "description": "Remotion project of the article-to-video pipeline. Started by pipeline/render.py; nothing here names an article or publisher.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource/inter": "5.2.8",
+    "@remotion/cli": "4.0.539",
+    "@remotion/layout-utils": "4.0.539",
+    "lucide-react": "1.52.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.539"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "typescript": "5.9.3"
+  }
+}

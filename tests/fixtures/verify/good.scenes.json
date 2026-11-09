@@ -1,0 +1,313 @@
+{
+ "article": {
+  "id": "article-fixture",
+  "title": "Best Bike Repair Shops in Springfield (2026)",
+  "publisher": "Northwind Cycles",
+  "promotional": true
+ },
+ "scenes": [
+  {
+   "id": 1,
+   "claim_owner": "publisher",
+   "visual": {
+    "type": "card",
+    "variant": "disclosure",
+    "icon": "info"
+   },
+   "on_screen": [
+    {
+     "role": "headline",
+     "text": "Who wrote this guide",
+     "source_ids": []
+    },
+    {
+     "role": "sub",
+     "text": "Northwind Cycles ranks itself in its own guide",
+     "source_ids": [
+      2
+     ]
+    }
+   ],
+   "voiceover": [
+    {
+     "text": "Northwind Cycles publishes this guide to bike repair shops in Springfield and ranks itself first.",
+     "source_ids": [
+      1,
+      2
+     ],
+     "spoken": null
+    }
+   ],
+   "duration_s": null
+  },
+  {
+   "id": 2,
+   "claim_owner": "publisher",
+   "visual": {
+    "type": "bar_chart",
+    "icon": "bar-chart-3",
+    "items": [
+     {
+      "label": "Northwind Cycles",
+      "value": "18",
+      "source_ids": [
+       8
+      ]
+     },
+     {
+      "label": "Acme Bike Lab",
+      "value": "16",
+      "source_ids": [
+       9
+      ]
+     },
+     {
+      "label": "Blue Harbor Bikes",
+      "value": "15",
+      "source_ids": [
+       10
+      ]
+     }
+    ]
+   },
+   "on_screen": [
+    {
+     "role": "headline",
+     "text": "Scores out of 20",
+     "source_ids": [
+      6
+     ]
+    }
+   ],
+   "voiceover": [
+    {
+     "text": "According to Northwind Cycles, each shop was scored out of 20 on four criteria worth 5 points each.",
+     "source_ids": [
+      6
+     ],
+     "spoken": null
+    },
+    {
+     "text": "Northwind Cycles scored 18, Acme Bike Lab scored 16, and Blue Harbor Bikes scored 15.",
+     "source_ids": [
+      8,
+      9,
+      10
+     ],
+     "spoken": null
+    }
+   ],
+   "duration_s": null
+  },
+  {
+   "id": 3,
+   "claim_owner": "publisher",
+   "visual": {
+    "type": "price_cards",
+    "icon": "wrench",
+    "items": [
+     {
+      "label": "Northwind Cycles",
+      "value": "$45",
+      "source_ids": [
+       8
+      ]
+     },
+     {
+      "label": "Acme Bike Lab",
+      "value": "EUR 30",
+      "source_ids": [
+       9
+      ]
+     },
+     {
+      "label": "Blue Harbor Bikes",
+      "value": "$60",
+      "source_ids": [
+       10
+      ]
+     }
+    ]
+   },
+   "on_screen": [
+    {
+     "role": "headline",
+     "text": "What a tune-up costs",
+     "source_ids": []
+    }
+   ],
+   "voiceover": [
+    {
+     "text": "Northwind Cycles reports that a basic tune-up costs $45 at Northwind Cycles.",
+     "source_ids": [
+      4
+     ],
+     "spoken": null
+    },
+    {
+     "text": "Acme Bike Lab charges EUR 30 for the same service, and Blue Harbor Bikes charges $60.",
+     "source_ids": [
+      5,
+      10
+     ],
+     "spoken": null
+    }
+   ],
+   "duration_s": null
+  },
+  {
+   "id": 4,
+   "claim_owner": "publisher",
+   "visual": {
+    "type": "big_number",
+    "icon": "clock",
+    "items": [
+     {
+      "label": "Finish the same day",
+      "value": "9 of 12",
+      "source_ids": [
+       4
+      ]
+     }
+    ]
+   },
+   "on_screen": [
+    {
+     "role": "headline",
+     "text": "Same-day tune-ups",
+     "source_ids": []
+    }
+   ],
+   "voiceover": [
+    {
+     "text": "According to Northwind Cycles, twelve shops were visited between March 3 and March 21, 2026.",
+     "source_ids": [
+      3
+     ],
+     "spoken": null
+    },
+    {
+     "text": "9 of the 12 shops finish a basic tune-up the same day.",
+     "source_ids": [
+      4
+     ],
+     "spoken": null
+    }
+   ],
+   "duration_s": null
+  },
+  {
+   "id": 5,
+   "claim_owner": "company:Acme Bike Lab",
+   "visual": {
+    "type": "quote",
+    "icon": "quote"
+   },
+   "on_screen": [
+    {
+     "role": "quote",
+     "text": "We fix most flats in under 20 minutes.",
+     "source_ids": [
+      13
+     ]
+    },
+    {
+     "role": "sub",
+     "text": "Acme Bike Lab, in its own words",
+     "source_ids": [
+      14
+     ]
+    }
+   ],
+   "voiceover": [
+    {
+     "text": "Acme Bike Lab says, in its own words, that it fixes most flats in under 20 minutes.",
+     "source_ids": [
+      13,
+      14
+     ],
+     "spoken": null
+    }
+   ],
+   "duration_s": null
+  },
+  {
+   "id": 6,
+   "claim_owner": "publisher",
+   "visual": {
+    "type": "bullets",
+    "icon": "list-checks"
+   },
+   "on_screen": [
+    {
+     "role": "headline",
+     "text": "Before you book",
+     "source_ids": []
+    },
+    {
+     "role": "bullet",
+     "text": "Ask for a written quote",
+     "source_ids": [
+      16
+     ]
+    },
+    {
+     "role": "bullet",
+     "text": "Check the wait time",
+     "source_ids": [
+      18
+     ]
+    }
+   ],
+   "voiceover": [
+    {
+     "text": "According to Northwind Cycles, riders rated wait times as the second most important factor after price.",
+     "source_ids": [
+      12
+     ],
+     "spoken": null
+    },
+    {
+     "text": "The guide advises asking for a written quote, since prices at 4 of the 12 shops were not posted.",
+     "source_ids": [
+      16,
+      17
+     ],
+     "spoken": null
+    },
+    {
+     "text": "Blue Harbor Bikes is the only shop open on Sundays, according to its posted hours.",
+     "source_ids": [
+      15
+     ],
+     "spoken": null
+    }
+   ],
+   "duration_s": null
+  },
+  {
+   "id": 7,
+   "claim_owner": "none",
+   "visual": {
+    "type": "card",
+    "variant": "outro",
+    "icon": "book-open"
+   },
+   "on_screen": [
+    {
+     "role": "headline",
+     "text": "Read the full guide",
+     "source_ids": []
+    }
+   ],
+   "voiceover": [
+    {
+     "text": "Every fact in this video comes from the guide by Northwind Cycles.",
+     "source_ids": [],
+     "spoken": null
+    }
+   ],
+   "duration_s": null
+  }
+ ]
+}

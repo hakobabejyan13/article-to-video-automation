@@ -1,0 +1,102 @@
+# Pipeline settings (PLAN.md sections 2 and 5). Nothing here is specific to one
+# article or publisher; article facts live only in source/article-XX.md.
+
+video:
+  target_seconds: [60, 90]   # final length range; the brief sets none (see DECISIONS.md)
+  width: 1920
+  height: 1080
+  fps: 30
+
+render:
+  concurrency: 1             # 8 GB laptop; raise on bigger machines
+  min_font_px: 36            # auto-fit text never shrinks below this; the render fails instead
+  # Optional: timeout_s (default 3600)
+
+speech:
+  words_per_minute: 122      # measured in T4: Kokoro af_heart, speed 1.0, pauses included
+
+llm:
+  provider: gemini           # gemini | anthropic
+  model: gemini-3.6-flash
+  fallback_models: [gemini-3.5-flash, gemini-flash-lite-latest]   # tried in order on 429/5xx
+  api_key_env: GEMINI_API_KEY
+  stream: true               # long non-streamed calls were cut at 30 s in the cloud
+  max_retries: 3             # checker retries, separate from HTTP retries
+  # Optional (defaults in pipeline/llm.py): http_attempts 2 (tries per model on
+  # 429/5xx/network errors), backoff_s 5, timeout_s 300, max_output_tokens 32000,
+  # scene_count "6-9" (the scene count the prompt asks for).
+  # To switch to the paid fallback, change three lines:
+  #   provider: anthropic
+  #   model: claude-haiku-5-5
+  #   api_key_env: ANTHROPIC_API_KEY
+  # (and set fallback_models: [] or to other Claude models)
+
+tts:
+  provider: kokoro           # adapters for others can be added later
+  voice: af_heart            # US English female; af_bella is the alternative
+  lang_code: a               # American English
+  speed: 1.0
+  line_pause_s: 0.35         # silence between two voiceover lines of one scene
+  scene_tail_s: 0.6          # silence after each scene's last line
+  lead_in_s: 0.05            # Kokoro's ~300 ms leading silence per line is cut to this
+  # Optional: repo_id (default hexgrad/Kokoro-82M), trim_db (default -45). Spoken-text rules: pipeline/lexicon.yaml
+
+music:
+  file: assets/music/contemplation.mp3   # "Contemplation" by Joth, CC0 (docs/licenses.md)
+  duck_db: -20               # music mean level relative to the voice's mean level (mux measures both)
+  # Optional (defaults in pipeline/mux.py): fade_in_s 1.0, fade_out_s 2.0,
+  # audio_bitrate "192k", sample_rate 48000, timeout_s 900.
+
+# Optional final-check settings (defaults in pipeline/check.py): silence_db -45,
+# silence_min_s 0.2, speech_start_tolerance_s 0.1, timeout_s 300.
+
+# Fixed on-screen tag for claims; filled from front matter, never from the LLM.
+source_tag:
+  publisher: "Source: {publisher}"
+  company: "Source: {company}, via {publisher}"
+
+# Voiceover phrases that count as attributing a claim to the publisher (verify check 7).
+# Matched case-insensitively as whole words. Verbs that also describe the publisher's
+# own result ("{publisher} ranks first", "{publisher} scores 48") are left out on
+# purpose: they state a claim instead of attributing it.
+attribution_phrases:
+  - "according to {publisher}"
+  - "{publisher} says"
+  - "{publisher} said"
+  - "{publisher} reports"
+  - "{publisher} reported"
+  - "{publisher} writes"
+  - "{publisher} notes"
+  - "{publisher} states"
+  - "{publisher} claims"
+  - "{publisher} found"
+  - "{publisher} lists"
+  - "{publisher} recommends"
+  - "{publisher} advises"
+  - "{publisher}'s guide"
+  - "{publisher}'s list"
+  - "{publisher}'s ranking"
+  - "{publisher}'s article"
+  - "{publisher}'s review"
+  - "{publisher}'s study"
+  - "{publisher}'s data"
+  - "per {publisher}"
+  - "in {publisher}'s"
+
+# The disclosure card (scene 1 of a promotional article) must name the publisher and
+# use one word from each list in its voiceover.
+disclosure_words:
+  publish: ["publishes", "published", "publisher", "written by", "wrote", "writes"]
+  rank: ["ranks itself", "ranked itself", "ranking itself", "ranks its own", "rates itself",
+         "puts itself", "lists itself", "places itself", "includes itself", "scores itself"]
+
+# Table column headers that mean rank or position (verify check 4): a number in such a
+# column is an ordinal, never a count.
+rank_headers: ["rank", "ranking", "position", "place", "#", "no.", "no"]
+
+review_warnings:
+  inference_words: ["that means", "which means", "this means", "so", "therefore", "thus",
+                    "as a result", "proves", "shows that"]
+  judging_words: ["transparent", "verified", "trusted", "leading", "best", "top", "proven",
+                  "reliable", "honest", "unbiased", "independent"]
+  min_sections: 3

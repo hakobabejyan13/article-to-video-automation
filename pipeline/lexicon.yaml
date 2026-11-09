@@ -1,0 +1,56 @@
+# Spoken-text rules for the tts stage (PLAN.md section 2).
+#
+# The checked voiceover `text` is never changed. The tts stage applies these rules,
+# in order, to make a separate `spoken` text that goes to the voice. Each rule is a
+# Python regular expression (`pattern`) and its replacement (`replace`, with \1, \2
+# for the groups). Rules apply one after another, so a later rule sees the output of
+# the earlier ones. Nothing here may name an article, company or publisher.
+#
+# Tuned in T4 against Kokoro's text front end (misaki, American English) by reading
+# the phonemes it makes for each form. What misaki already reads correctly is left
+# alone on purpose:
+#   - $3,000, $45, $2.50, 8.9%, 91%, 68,631, years like 2026: read correctly.
+#   - Acronyms in capitals (AEO, GEO, CRO, SEO, AI) are spelled letter by letter.
+#     Writing them as "A E O" makes it worse: the first "A" is read as the article
+#     "uh". So there are no acronym rules.
+#   - "No. 1" is read "number one"; "1st" is read "first".
+# What it reads wrongly is fixed below.
+
+rules:
+  # Curly apostrophes and quotes: misaki does not know "it’s" with a curly
+  # apostrophe and drops the word.
+  - {pattern: '[‘’]', replace: "'"}
+  - {pattern: '[“”]', replace: '"'}
+
+  # Currency codes and signs before an amount. "GBP 1,500" is otherwise read
+  # "G B P one thousand five hundred". Amounts with a K/M/B suffix first, so
+  # "$1.5M" is not read "one dollar and five cents M".
+  - {pattern: '(?:\bUSD\s?|\$)(\d[\d,]*(?:\.\d+)?)\s?[Kk]\b', replace: '\1 thousand dollars'}
+  - {pattern: '(?:\bUSD\s?|\$)(\d[\d,]*(?:\.\d+)?)\s?(?:M|mn)\b', replace: '\1 million dollars'}
+  - {pattern: '(?:\bUSD\s?|\$)(\d[\d,]*(?:\.\d+)?)\s?(?:B|bn)\b', replace: '\1 billion dollars'}
+  - {pattern: '(?:\bGBP\s?|£)(\d[\d,]*(?:\.\d+)?)\s?[Kk]\b', replace: '\1 thousand pounds'}
+  - {pattern: '(?:\bGBP\s?|£)(\d[\d,]*(?:\.\d+)?)\s?(?:M|mn)\b', replace: '\1 million pounds'}
+  - {pattern: '(?:\bEUR\s?|€)(\d[\d,]*(?:\.\d+)?)\s?[Kk]\b', replace: '\1 thousand euros'}
+  - {pattern: '(?:\bEUR\s?|€)(\d[\d,]*(?:\.\d+)?)\s?(?:M|mn)\b', replace: '\1 million euros'}
+  # Whole amounts. Amounts with pence or cents are left to misaki, which reads
+  # "$2.50" as "two dollars and fifty cents".
+  - {pattern: '(?:\bGBP\s?|£)(\d[\d,]*)(?![\d.,]*\d)', replace: '\1 pounds'}
+  - {pattern: '(?:\bEUR\s?|€)(\d[\d,]*)(?![\d.,]*\d)', replace: '\1 euros'}
+  - {pattern: '(?:\bUSD\s?|\$)(\d[\d,]*)(?![\d.,]*\d)', replace: '\1 dollars'}
+
+  # Scores and fractions: "48/50" is otherwise read "forty-eight fifty".
+  # "24/7" first; dates like 3/21/2026 (a third number) are left alone.
+  - {pattern: '\b24/7\b', replace: '24 7'}
+  - {pattern: '(?<![\d/])(\d+)/(\d+)(?![\d/])', replace: '\1 out of \2'}
+
+  # Ranges: "3-5 days" is otherwise read "three-five days".
+  - {pattern: '(?<![\d.,/-])(\d[\d,]*)\s?[-–]\s?(\d[\d,]*)(?![\d.,/-]*\d)', replace: '\1 to \2'}
+
+  # Rank marks: "#1" is otherwise read "one".
+  - {pattern: '#\s?(\d+)\b', replace: 'number \1'}
+
+  # Multipliers: "3x" is otherwise read "three ex".
+  - {pattern: '\b(\d+(?:\.\d+)?)x\b', replace: '\1 times'}
+
+  # "vs." is otherwise read "vees".
+  - {pattern: '\bvs\.?(?=\s)', replace: 'versus'}

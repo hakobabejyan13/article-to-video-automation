@@ -1,0 +1,116 @@
+{
+ "total_s": 79.55,
+ "sample_rate": 24000,
+ "provider": "kokoro",
+ "voice": "af_heart",
+ "speed": 1.0,
+ "words": 182,
+ "words_per_minute": 137.3,
+ "scenes_sha256": "4dff796ef6ee3216e8384a7ec2d7edff7a072402e2db91eeb53ccf91d248a9f8",
+ "scenes": [
+  {
+   "id": 1,
+   "file": "scene-01.wav",
+   "start_s": 0.0,
+   "duration_s": 6.6,
+   "lines": [
+    {
+     "start_s": 0.0,
+     "duration_s": 6.0
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "file": "scene-02.wav",
+   "start_s": 6.6,
+   "duration_s": 14.15,
+   "lines": [
+    {
+     "start_s": 6.6,
+     "duration_s": 7.2
+    },
+    {
+     "start_s": 14.15,
+     "duration_s": 6.0
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "file": "scene-03.wav",
+   "start_s": 20.75,
+   "duration_s": 12.95,
+   "lines": [
+    {
+     "start_s": 20.75,
+     "duration_s": 5.2
+    },
+    {
+     "start_s": 26.3,
+     "duration_s": 6.8
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "file": "scene-04.wav",
+   "start_s": 33.7,
+   "duration_s": 11.75,
+   "lines": [
+    {
+     "start_s": 33.7,
+     "duration_s": 6.0
+    },
+    {
+     "start_s": 40.05,
+     "duration_s": 4.8
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "file": "scene-05.wav",
+   "start_s": 45.45,
+   "duration_s": 7.4,
+   "lines": [
+    {
+     "start_s": 45.45,
+     "duration_s": 6.8
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "file": "scene-06.wav",
+   "start_s": 52.85,
+   "duration_s": 21.3,
+   "lines": [
+    {
+     "start_s": 52.85,
+     "duration_s": 6.4
+    },
+    {
+     "start_s": 59.6,
+     "duration_s": 7.6
+    },
+    {
+     "start_s": 67.55,
+     "duration_s": 6.0
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "file": "scene-07.wav",
+   "start_s": 74.15,
+   "duration_s": 5.4,
+   "lines": [
+    {
+     "start_s": 74.15,
+     "duration_s": 4.8
+    }
+   ]
+  }
+ ]
+}

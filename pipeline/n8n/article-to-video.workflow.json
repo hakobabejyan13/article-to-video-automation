@@ -1,0 +1,193 @@
+{
+  "name": "Article to video",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Article to video",
+        "formDescription": "Path of the article file, relative to the project folder. Step 1 writes the scenes, script and fact sheet, then stops for your review.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Article path",
+              "placeholder": "source/article-XX.md",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "onReceived",
+        "options": {
+          "buttonLabel": "Start"
+        }
+      },
+      "id": "a2v-node-1",
+      "name": "Article form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "a2v-article-form"
+    },
+    {
+      "parameters": {
+        "executeOnce": true,
+        "command": "=cd /d \"%A2V_PROJECT_DIR%\" && .venv\\Scripts\\python -m pipeline run \"{{ $('Article form').first().json['Article path'] }}\" --review"
+      },
+      "id": "a2v-node-2",
+      "name": "Scenes and fact sheet (--review)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        260,
+        0
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resume": "form",
+        "formTitle": "Approve the fact sheet",
+        "formDescription": "=Read the fact sheet and script in output/<article id>/ (factsheet.md, script.md). Submit to make the voiceover and video. To reject, do not submit: stop this execution in n8n, edit the scenes JSON, and start again.\n\nStep 1 output:\n{{ $json.stdout }}",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Decision",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Approve: make the video"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Approve"
+        }
+      },
+      "id": "a2v-node-3",
+      "name": "Review approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        520,
+        -100
+      ],
+      "webhookId": "a2v-review-approval"
+    },
+    {
+      "parameters": {
+        "executeOnce": true,
+        "command": "=cd /d \"%A2V_PROJECT_DIR%\" && .venv\\Scripts\\python -m pipeline run \"{{ $('Article form').first().json['Article path'] }}\" --from tts"
+      },
+      "id": "a2v-node-4",
+      "name": "Voiceover and video (--from tts)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        780,
+        -100
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "errorMessage": "=Pipeline failed (non-zero exit code). {{ $json.error }}"
+      },
+      "id": "a2v-node-5",
+      "name": "Stop on failure",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        780,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": true,
+        "command": "=cd /d \"%A2V_PROJECT_DIR%\\output\" && dir /b \"{{ $('Article form').first().json['Article path'].split(/[\\\\/]/).pop().replace(/\\.md$/i, '') }}\""
+      },
+      "id": "a2v-node-6",
+      "name": "List output files",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        -200
+      ]
+    }
+  ],
+  "connections": {
+    "Article form": {
+      "main": [
+        [
+          {
+            "node": "Scenes and fact sheet (--review)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scenes and fact sheet (--review)": {
+      "main": [
+        [
+          {
+            "node": "Review approval",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop on failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Review approval": {
+      "main": [
+        [
+          {
+            "node": "Voiceover and video (--from tts)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Voiceover and video (--from tts)": {
+      "main": [
+        [
+          {
+            "node": "List output files",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop on failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}
